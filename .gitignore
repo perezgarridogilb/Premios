@@ -1,0 +1,15 @@
+# General
+.DS_Store
+.AppleDouble
+.LSOverride
+medias/
+__pycache__/
+.env/
+*.pdf
+
+# Icon must end with two \r
+Icon
+
+# Thumbnails
+*.txt
+._*
