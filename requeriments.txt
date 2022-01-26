@@ -1,0 +1,2 @@
+django
+pip3 install python-multipart
