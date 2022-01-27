@@ -25,6 +25,8 @@ django-admin startproject premiosplatziapp
 cd premiosplatziapp/
 python3 manage.py runserver
 python3 manage.py startapp *
+# Crear un usuario y contraseña para acceder al administrador de Django
+python3 manage.py createsuperuser
 ```
 ## Databases
 
