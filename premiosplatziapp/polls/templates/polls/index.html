@@ -1,11 +1,17 @@
-{% load static %}
-<!-- 
-    Tomar todas las carpetas static que nosotros tengamos en las aplicaciones de nuestro proyecto
-    conbinarlas en una y empezar a tener los archivos estaticos disponibles
--->
-<link rel="stylesheet" href="{% static 'polls/style.css' %}"></link>
-
-{% if latest_question_list %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premios App</title>
+</head>
+<body>
+    <header>
+        <h1>Premios App</h1>
+    </header>
+    <main>
+        {% if latest_question_list %}
         <ul>
             {% for question in latest_question_list %}
             <li>    
@@ -18,4 +24,11 @@
 {% else %}
         <p>No polls are available.</p>
 {% endif %}
-    
+    </main>
+    <footer>
+        <a href="#">Contacto</a>
+        <a href="#">Política de privacidad</a>
+        <a href="#">Términos y condiciones</a>
+    </footer>
+</body>
+</html>
