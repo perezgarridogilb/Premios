@@ -3,6 +3,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 # from django.http import HttpResponse, HttpResponseRedirect
 # Utilizamos generic views / views based class
 from django.views import generic
+from django.utils import timezone
 
 from .models import Question, Choice
 
@@ -36,8 +37,10 @@ class IndexView(generic.ListView):
     
     def get_queryset(self):
         """Return the last five publised questions"""
+        # Traemos todas excepto a las del futuro y ordenamos (trayéndonos a las cinco primeras):
+        # pub_date__lte: Nos vamos a fijar en la fecha de públicación que sea menor o igual
         # -pub_date: Ordenar desde las más recientes a las más antiguas
-        return Question.objects.order_by("-pub_date")[:5]
+        return Question.objects.filter(pub_date__lte=timezone.now()).order_by("-pub_date")[:5]
     
     
 class DetailView(generic.DetailView):

@@ -8,7 +8,7 @@ class Question(models.Model):
     # Identificador en automático
     question_text = models.CharField(max_length=200)
     # Nombre sencillo a la lectura
-    pub_date = models.DateField("date published")
+    pub_date = models.DateTimeField("date published")
     
     def __str__(self):
         return self.question_text
@@ -16,8 +16,11 @@ class Question(models.Model):
     # Fue publicada recientemente (timedelta es un objeto que define la diferencia de tiempo)
     # Le resta al tiempo actual un día
     def was_published_recently(self):
-        return timezone.now() >= self.pub_date >= timezone.now() - datetime.timedelta(days=1)
+        return (timezone.now()) >= self.pub_date >= (timezone.now() - datetime.timedelta(days=1))
     
+    def was_published_last_time(self):
+        return self.pub_date <= timezone.now() - datetime.timedelta(days=30) 
+       
 class Choice(models.Model):
     # Llave foránea de  question
     # Question (es el constructor)
