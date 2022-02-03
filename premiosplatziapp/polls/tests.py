@@ -88,29 +88,75 @@ class QuestionIndexViewTests(TestCase):
         response = self.client.get(reverse("polls:index"))
         # Verificamos que lo que contenga adentro es a una pregunta (de create_question)
         self.assertQuerysetEqual(response.context["latest_question_list"], [question])
-        
+     
+    # Funcionamiento correcto de nuestro index cuando publicamos una pregunta en el futuro y pasado    
     def test_future_question_and_past_question(self):
         """
         Event if both past and future question exist, only past questions are displayed
         """
         past_question = create_question(question_text="Past question", days=-30)
         future_question = create_question(question_text="Future question", days=30)
-        response = self.client.get(reverse("polls:index"))        
+        response = self.client.get(reverse("polls:index")) 
+        # Verificamos que también se haya publicado past_question       
         self.assertQuerysetEqual(
                 response.context["latest_question_list"],
                 [past_question]
             )
-
+        
+    # Verificamos el funcionamiento correcto de nuestro index cuando publicamos dos preguntas en el pasado
     def test_two_past_questions(self):
         """
         The questions index page may display multiple questions.
         """
         past_question1 = create_question(question_text="Past question 1", days=-30)
         past_question2 = create_question(question_text="Past question 2", days=-40)
-        response = self.client.get(reverse("polls:index"))        
+        response = self.client.get(reverse("polls:index"))  
+        # Verificamos que también se hayan publicado las past_question         
         self.assertQuerysetEqual(
                 response.context["latest_question_list"],
                 [past_question1, past_question2]
         )
+        
+    # Reto para las dos preguntas en el futuro
+    def test_two_future_questions(self):
+        create_question(question_text="Future question", days=30)
+        create_question(question_text="Future question", days=30)
+        response = self.client.get(reverse("polls:index")) 
+        self.assertQuerysetEqual(
+            response.context["latest_question_list"],
+            []
+        )
+    
+
+# Vamos a hacer tests detail view a partir del modelo question
+class QuestionDetailViewTests(TestCase):
+    # Dos tests para verificar
+    
+    def test_future_question(self):
+        """
+        The detail view of a question with a pub_date in the future
+        returns a 404 error not found
+        """
+        future_question = create_question(question_text="Future question", days=30)
+        # id y pk son lo mismo, además de una coma ", " para que to interprete como una tupla
+        url = reverse("polls:detail", args=(future_question.pk,))
+        response = self.client.get(url)
+        # Si es 404 el test es aprobado
+        self.assertEqual(response.status_code, 404)
+
+        
+    def past_future_question(self):
+        """
+        The detail view of a question with a pub_date in the future
+        returns a 404 error not found
+        """
+        past_question = create_question(question_text="Past question", days=-30)
+        # id y pk son lo mismo, además de una coma ", " para que to interprete como una tupla
+        url = reverse("polls:detail", args=(past_question.pk,))
+        response = self.client.get(url)
+        # Verificar que en la respuesta del texto http existe el texto de la pregunta
+        self.assertContains(response, past_question.question_text)
+    
+        
     
     

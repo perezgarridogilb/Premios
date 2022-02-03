@@ -47,6 +47,16 @@ class DetailView(generic.DetailView):
     model = Question
     template_name = "polls/detail.html"
     
+    # Método interno de class-based generic views
+    def get_queryset(self):
+        """
+        Excludes any questions that arent published yet
+        Exluimos las preguntas que no son publicadas todavía
+        """
+        # Restringiengo a las que solamente tienen una fecha de publicación menor o igual a la fecha actual
+        # Por lo tanto no son preguntas del futuro
+        return Question.objects.filter(pub_date__lte=timezone.now())
+        
 class ResultView(generic.DetailView):
     model = Question
     template_name = "polls/results.html"
