@@ -1,37 +1,52 @@
-{# ¡post para viajar oculto! #}
-<form action="{% url 'polls:vote' question.id %}" method="post">
-    {# ¡sistema de seguridad! #}
-    {% csrf_token %}
-    <fieldset>
-        <legend><h1>{{ question.question_text }}</h1></legend>
-        
-        {% if error_message %}
-            <p><strong>{{ error_message }}</strong></p>
-        {% endif %}
-        {% for choice in question.choice_set.all %}
-        {# name: valor e id: clave #}
-        {# forloop.counter: input para cada label #}
-        {# choice dinámico 1,..+l #}
-            <input 
-            type="radio"
-            name="choice"
-            id="choice{{ forloop.counter }}"
-            value="{{ choice.id }}"
-            >
-            <label for="choice{{ forloop.counter }} ">
-                {{ choice.choice_text }}
-            </label>
-            <br>
-        {% endfor %}
-    </fieldset>
-    <input type="submit" value="Votar">
-</form>
+{% load static %}
 
-<!-- <h1>{{ question.question_text }}</h1>
-<ul>
-    {# question.choice_set.all: acceder a todas las respuestas de una pregunta #}
-    {% for choice in question.choice_set.all %}
-        <li>{{ choice.choice_text }}</li>
-    {% endfor %}
-        
-</ul> -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'polls/style.css' %}">
+    <link rel="stylesheet" href="{% static 'polls/detail.css' %}">
+    <title>{{ question.question_text }}</title>
+</head>
+<body>
+        {# ¡post para viajar oculto! #}
+    <form action="{% url 'polls:vote' question.id %}" method="post">
+        {# ¡sistema de seguridad! #}
+        {% csrf_token %}
+        <fieldset>
+            <legend><h1>{{ question.question_text }}</h1></legend>
+            
+            {% if error_message %}
+                <p><strong>{{ error_message }}</strong></p>
+            {% endif %}
+            {% for choice in question.choice_set.all %}
+            {# name: valor e id: clave #}
+            {# forloop.counter: input para cada label #}
+            {# choice dinámico 1,..+l #}
+                <input 
+                type="radio"
+                name="choice"
+                id="choice{{ forloop.counter }}"
+                value="{{ choice.id }}"
+                >
+                <label for="choice{{ forloop.counter }} ">
+                    {{ choice.choice_text }}
+                </label>
+                <br>
+            {% endfor %}
+        </fieldset>
+        <input type="submit" value="Votar">
+    </form>
+
+    <!-- <h1>{{ question.question_text }}</h1>
+    <ul>
+        {# question.choice_set.all: acceder a todas las respuestas de una pregunta #}
+        {% for choice in question.choice_set.all %}
+            <li>{{ choice.choice_text }}</li>
+        {% endfor %}
+            
+    </ul> -->
+</body>
+</html>
