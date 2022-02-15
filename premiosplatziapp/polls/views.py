@@ -1,4 +1,3 @@
-import re
 from django.shortcuts import render, redirect, get_object_or_404
 # from django.http import HttpResponse, HttpResponseRedirect
 # Utilizamos generic views / views based class
