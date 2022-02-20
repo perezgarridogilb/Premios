@@ -12,7 +12,7 @@
 </head>
 <body>
 
-        <h1 style="margin-top: 30%;">{{ question.question_text }}</h1>
+        <h1 style="">{{ question.question_text }}</h1>
     
         <ul>
             
@@ -21,6 +21,7 @@
             {% endfor %}
                 
         </ul>
-    <input type="submit" href="{% url 'polls:detail' question.id %}" value="¿Te gustaría votar de nuevo?">
+        
+    <a type="submit" style="margin-bottom: 3%;" href="{% url 'polls:detail' question.id %}">¿Te gustaría votar de nuevo?</a>
 </body>
 </html>
