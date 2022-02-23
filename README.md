@@ -1,6 +1,8 @@
 # Premios
 Curso de Django
 
+![Premios](https://user-images.githubusercontent.com/56992179/155430954-efd366dc-c883-48e2-a94c-a5ecc39de9ce.png)
+
 # Git y Github
 ```
 git init
@@ -42,11 +44,13 @@ python3 manage.py migrate
 Lo ideal es que se usen base de datos relacionales 
 
 ## Settings.py (Production)
+
+### Domains
 ```
 # Aquí se usarían nuestros dominios
 ALLOWED_HOSTS = ['*']
 ```
-
+### Databases
 ```
 DATABASES = {
     'default': {
